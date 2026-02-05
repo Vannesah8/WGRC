@@ -123,23 +123,45 @@
 </div>
 
 <script>
+const prices = {
+  basic: { 'Studio': 2300, '1 Bedroom': 2700, '2 Bedroom': 3300, '3 Bedroom': 4100, '4 Bedroom': 5000, '5 Bedroom': 5900, '6 Bedroom': 6800 },
+  deep: { 'Studio': 4800, '1 Bedroom': 5500, '2 Bedroom': 6800, '3 Bedroom': 8200, '4 Bedroom': 9800, '5 Bedroom': 11500, '6 Bedroom': 13500 },
+  afterparty: { 'Studio / 1 Bedroom': 6000, '2 Bedroom': 7500, '3 Bedroom': 9000, '4 Bedroom': 11000, '5 Bedroom': 13000, '6 Bedroom': 15000 },
+  move: { 'Studio': 3500, '1 Bedroom': 4200, '2 Bedroom': 5300, '3 Bedroom': 6800, '4 Bedroom': 8200, '5 Bedroom': 9700, '6 Bedroom': 11200 }
+};
+
+function updateSizes() {
+  const service = document.getElementById('service').value;
+  const sizeSelect = document.getElementById('size');
+  sizeSelect.innerHTML = '<option value="">Select size</option>';
+  if (service && prices[service]) {
+    for (const size in prices[service]) {
+      const option = document.createElement('option');
+      option.value = size;
+      option.textContent = size;
+      sizeSelect.appendChild(option);
+    }
+    document.getElementById('size-container').style.display = 'block';
+  } else {
+    document.getElementById('size-container').style.display = 'none';
+  }
+  document.getElementById('price-box').style.display = 'none';
+}
+
+function updatePrice() {
+  const service = document.getElementById('service').value;
+  const size = document.getElementById('size').value;
+  if (service && size && prices[service][size]) {
+    document.getElementById('price').textContent = 'KES ' + prices[service][size].toLocaleString();
+    document.getElementById('price-box').style.display = 'block';
+  } else {
+    document.getElementById('price-box').style.display = 'none';
+  }
+}
+
+// Form submission
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
-
-  // Collect form data
-  const name = document.querySelector('input[placeholder="Enter your full name"]').value;
-  const phone = document.querySelector('input[type="tel"]').value;
-  const location = document.querySelector('input[placeholder^="e.g."]').value;
-  const serviceSelect = document.getElementById('service');
-  const service = serviceSelect.options[serviceSelect.selectedIndex].text;
-  const size = document.getElementById('size').value;
-  const price = document.getElementById('price').textContent;
-  const date = document.querySelector('input[type="date"]').value;
-  const notes = document.querySelector('textarea').value;
-
-  // TODO: Send data to email or server here if needed
-
-  // Hide form and show thank you message
   this.style.display = 'none';
   document.getElementById('thankYouMessage').style.display = 'block';
 });
@@ -147,4 +169,5 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
 
 </body>
 </html>
+
 
