@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Service | WhiteGlove Residential Care</title>
+
+  <!-- Kugile Regular Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Kugile&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+    body { margin: 0; background: #f5f5f5; color: #222; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+    .booking-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 520px;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .logo { text-align: center; margin-bottom: 25px; }
+    .logo h1 {
+      font-family: 'Kugile', sans-serif;
+      font-weight: normal;
+      font-size: 36px;
+      letter-spacing: 2px;
+      color: #000;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    .logo p { font-size: 13px; color: #555; margin-top: 6px; letter-spacing: 1px; }
+
+    h2 { text-align: center; font-weight: 500; margin: 20px 0; font-size: 20px; }
+
+    form { display: flex; flex-direction: column; gap: 20px; }
+
+    label { font-size: 14px; color: #555; margin-bottom: 6px; display: block; }
+    input, select, textarea { padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; width: 100%; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #DE3163; }
+    textarea { resize: none; height: 80px; }
+
+    #price-box { display: none; padding: 14px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; margin-top: -5px; }
+    #price { font-size: 18px; margin-top: 6px; color: #DE3163; }
+
+    button { margin-top: 10px; padding: 14px; background: #DE3163; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; }
+    button:hover { opacity: 0.9; }
+
+    .footer-note { text-align: center; font-size: 12px; color: #777; margin-top: 20px; line-height: 1.4; }
+
+    @media (max-width: 480px) {
+      .booking-container { padding: 30px 20px; }
+      h2 { font-size: 18px; }
+      .logo h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="booking-container">
+  <div class="logo">
+    <h1>WhiteGlove Residential Care</h1>
+    <p>Executive Home Services</p>
+  </div>
+
+  <h2>Book a Service</h2>
+
+  <form onsubmit="sendBooking(event)">
+    <div>
+      <label>Full Name</label>
+      <input type="text" placeholder="Enter your full name" required />
+    </div>
+    <div>
+      <label>Phone Number</label>
+      <input type="tel" placeholder="e.g. 0711 100 200" required />
+    </div>
+    <div>
+      <label>Location / Estate</label>
+      <input type="text" placeholder="e.g. Nyari, Westlands" required />
+    </div>
+    <div>
+      <label>Service Type</label>
+      <select id="service" required onchange="updateSizes()">
+        <option value="">Select a service</option>
+        <option value="basic">Basic Cleaning</option>
+        <option value="deep">Deep Cleaning</option>
+        <option value="afterparty">After Party Clean-Up</option>
+        <option value="move">Moving In / Out Cleaning</option>
+        <option value="office">Office Cleaning</option>
+      </select>
+    </div>
+    <div id="size-container" style="display:none;">
+      <label>House / Office Size</label>
+      <select id="size" onchange="updatePrice()">
+        <option value="">Select size</option>
+      </select>
+    </div>
+    <div id="price-box">
+      <strong>Estimated Cost:</strong>
+      <div id="price">KES 0</div>
+      <small style="color:#777;">Final price may vary based on assessment.</small>
+    </div>
+    <div>
+      <label>Preferred Date</label>
+      <input type="date" required />
+    </div>
+    <div>
+      <label>Additional Notes</label>
+      <textarea placeholder="Any special instructions?"></textarea>
+    </div>
+    <button type="submit">Submit Booking</button>
+  </form>
+
+  <div class="footer-note">
+    Thank you for choosing WhiteGlove Residential Care.<br />
+    You will receive a confirmation shortly.
+  </div>
+</div>
+
+<script>
+function sendBooking(e) {
+  e.preventDefault();
+  const name = document.querySelector('input[placeholder="Enter your full name"]').value;
+  const phone = document.querySelector('input[type="tel"]').value;
+  const location = document.querySelector('input[placeholder^="e.g."]').value;
+  const serviceSelect = document.getElementById('service');
+  const service = serviceSelect.options[serviceSelect.selectedIndex].text;
+  const size = document.getElementById('size').value;
+  const price = document.getElementById('price').textContent;
+  const date = document.querySelector('input[type="date"]').value;
+  const notes = document.querySelector('textarea').value;
+
+  // WhatsApp message
+  const waMessage = `WhiteGlove Booking Request%0A%0AName: ${name}%0APhone: ${phone}%0ALocation: ${location}%0AService: ${service}%0ASize: ${size}%0AEstimated Cost: ${price}%0ADate: ${date}%0ANotes: ${notes}`;
+  window.open(`https://wa.me/254711100200?text=${waMessage}`, '_blank');
+
+  // Send via email
+  const email = 'sparklingcinderellaz@gmail.com';
+  const subject = encodeURIComponent('New WhiteGlove Booking Request');
+  const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\nLocation: ${location}\nService: ${service}\nSize: ${size}\nEstimated Cost: ${price}\nDate: ${date}\nNotes: ${notes}`);
+  window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+}
+</script>
+
+</body>
+</html>
