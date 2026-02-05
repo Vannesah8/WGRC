@@ -51,6 +51,8 @@
 
     .footer-note { text-align: center; font-size: 12px; color: #777; margin-top: 20px; line-height: 1.4; }
 
+    .thank-you { display: none; text-align: center; font-size: 16px; color: #DE3163; margin-top: 20px; }
+
     @media (max-width: 480px) {
       .booking-container { padding: 30px 20px; }
       h2 { font-size: 18px; }
@@ -68,7 +70,7 @@
 
   <h2>Book a Service</h2>
 
-  <form onsubmit="sendBooking(event)">
+  <form id="bookingForm">
     <div>
       <label>Full Name</label>
       <input type="text" placeholder="Enter your full name" required />
@@ -114,15 +116,17 @@
     <button type="submit">Submit Booking</button>
   </form>
 
-  <div class="footer-note">
+  <div class="thank-you" id="thankYouMessage">
     Thank you for choosing WhiteGlove Residential Care.<br />
-    You will receive a confirmation shortly.
+    Your booking has been received.
   </div>
 </div>
 
 <script>
-function sendBooking(e) {
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
+
+  // Collect form data
   const name = document.querySelector('input[placeholder="Enter your full name"]').value;
   const phone = document.querySelector('input[type="tel"]').value;
   const location = document.querySelector('input[placeholder^="e.g."]').value;
@@ -133,17 +137,14 @@ function sendBooking(e) {
   const date = document.querySelector('input[type="date"]').value;
   const notes = document.querySelector('textarea').value;
 
-  // WhatsApp message
-  const waMessage = `WhiteGlove Booking Request%0A%0AName: ${name}%0APhone: ${phone}%0ALocation: ${location}%0AService: ${service}%0ASize: ${size}%0AEstimated Cost: ${price}%0ADate: ${date}%0ANotes: ${notes}`;
-  window.open(`https://wa.me/254711100200?text=${waMessage}`, '_blank');
+  // TODO: Send data to email or server here if needed
 
-  // Send via email
-  const email = 'sparklingcinderellaz@gmail.com';
-  const subject = encodeURIComponent('New WhiteGlove Booking Request');
-  const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\nLocation: ${location}\nService: ${service}\nSize: ${size}\nEstimated Cost: ${price}\nDate: ${date}\nNotes: ${notes}`);
-  window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
-}
+  // Hide form and show thank you message
+  this.style.display = 'none';
+  document.getElementById('thankYouMessage').style.display = 'block';
+});
 </script>
 
 </body>
 </html>
+
