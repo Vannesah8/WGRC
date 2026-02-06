@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,16 @@
 
   <style>
     * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-    body { margin: 0; background: #f5f5f5; color: #222; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
     .booking-container {
       background: #ffffff;
@@ -20,51 +33,127 @@
       padding: 40px 30px;
       border-radius: 12px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-      display: flex; flex-direction: column; gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .logo { text-align: center; margin-bottom: 25px; }
-    .logo h1 {
-      font-family: 'Kugile', sans-serif;
-      font-weight: normal;
-      font-size: 36px;
-      letter-spacing: 2px;
-      color: #000;
-      margin: 0;
-      text-transform: uppercase;
+    /* LOGO */
+    .logo {
+      text-align: center;
+      margin-bottom: 15px;
     }
-    .logo p { font-size: 13px; color: #555; margin-top: 6px; letter-spacing: 1px; }
 
-    h2 { text-align: center; font-weight: 500; margin: 20px 0; font-size: 20px; }
+    .logo-img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
 
-    form { display: flex; flex-direction: column; gap: 20px; }
+    h2 {
+      text-align: center;
+      font-weight: 500;
+      margin: 10px 0 20px;
+      font-size: 20px;
+    }
 
-    label { font-size: 14px; color: #555; margin-bottom: 6px; display: block; }
-    input, select, textarea { padding: 12px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; width: 100%; }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: #DE3163; }
-    textarea { resize: none; height: 80px; }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-    #price-box { display: none; padding: 14px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; margin-top: -5px; border-left: 4px solid #DE3163; }
-    #price { font-size: 18px; margin-top: 6px; color: #DE3163; }
+    label {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+    }
 
-    button { margin-top: 10px; padding: 14px; background: #DE3163; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; }
-    button:hover { opacity: 0.9; }
+    input, select, textarea {
+      padding: 12px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 100%;
+    }
 
-    .thank-you { display: none; text-align: center; font-size: 16px; color: #DE3163; margin-top: 20px; }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #DE3163;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    #price-box {
+      display: none;
+      padding: 14px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background: #fafafa;
+      margin-top: -5px;
+      border-left: 4px solid #DE3163;
+    }
+
+    #price {
+      font-size: 18px;
+      margin-top: 6px;
+      color: #DE3163;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 14px;
+      background: #DE3163;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .thank-you {
+      display: none;
+      text-align: center;
+      font-size: 16px;
+      color: #DE3163;
+      margin-top: 20px;
+    }
 
     @media (max-width: 480px) {
-      .booking-container { padding: 30px 20px; }
-      h2 { font-size: 18px; }
-      .logo h1 { font-size: 28px; letter-spacing: 1px; }
+      .booking-container {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .logo-img {
+        max-width: 260px;
+      }
     }
   </style>
 </head>
+
 <body>
 
 <div class="booking-container">
+
+  <!-- LOGO -->
   <div class="logo">
-    <h1>WhiteGlove Residential Care</h1>
-    <p>Executive Home Services</p>
+    <img src="whiteglove-logo.png" alt="WhiteGlove Residential Care logo" class="logo-img">
   </div>
 
   <h2>Book a Service</h2>
@@ -74,14 +163,17 @@
       <label>Full Name</label>
       <input type="text" placeholder="Enter your full name" required />
     </div>
+
     <div>
       <label>Phone Number</label>
       <input type="tel" placeholder="e.g. 0711 100 200" pattern="^(07|01)\d{8}$" required />
     </div>
+
     <div>
       <label>Location / Estate</label>
       <input type="text" placeholder="e.g. Nyari, Westlands" required />
     </div>
+
     <div>
       <label>Service Type</label>
       <select id="service" required onchange="updateSizes()">
@@ -93,12 +185,14 @@
         <option value="office">Office Cleaning</option>
       </select>
     </div>
+
     <div id="size-container" style="display:none;">
       <label>House / Office Size</label>
       <select id="size" onchange="updatePrice()">
         <option value="">Select size</option>
       </select>
     </div>
+
     <div id="price-box">
       <strong>Estimated Cost:</strong>
       <div id="price">KES 0</div>
@@ -107,19 +201,22 @@
         Final price may vary after assessment.
       </small>
     </div>
+
     <div>
       <label>Preferred Date</label>
       <input type="date" id="dateInput" required />
     </div>
+
     <div>
       <label>Additional Notes</label>
       <textarea placeholder="Any special instructions?"></textarea>
     </div>
+
     <button type="submit">Confirm Booking</button>
   </form>
 
   <div class="thank-you" id="thankYouMessage">
-    Thank you for choosing WhiteGlove Residential Care.<br />
+    Thank you for choosing WhiteGlove Residential Care.<br>
     Your booking has been received on WhatsApp.
   </div>
 </div>
@@ -137,6 +234,7 @@ function updateSizes() {
   const service = document.getElementById('service').value;
   const sizeSelect = document.getElementById('size');
   sizeSelect.innerHTML = '<option value="">Select size</option>';
+
   if (service && prices[service]) {
     for (const size in prices[service]) {
       const option = document.createElement('option');
@@ -148,21 +246,24 @@ function updateSizes() {
   } else {
     document.getElementById('size-container').style.display = 'none';
   }
+
   document.getElementById('price-box').style.display = 'none';
 }
 
 function updatePrice() {
   const service = document.getElementById('service').value;
   const size = document.getElementById('size').value;
+
   if (service && size && prices[service][size]) {
-    document.getElementById('price').textContent = 'KES ' + prices[service][size].toLocaleString();
+    document.getElementById('price').textContent =
+      'KES ' + prices[service][size].toLocaleString();
     document.getElementById('price-box').style.display = 'block';
   } else {
     document.getElementById('price-box').style.display = 'none';
   }
 }
 
-// prevent past dates
+// Prevent past dates
 const today = new Date().toISOString().split('T')[0];
 document.getElementById('dateInput').setAttribute('min', today);
 
@@ -179,10 +280,23 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
   const date = document.getElementById('dateInput').value;
   const notes = document.querySelector('textarea').value || 'None';
 
-  const message = `WHITEGLOVE BOOKING REQUEST\n\nName: ${name}\nPhone: ${phone}\nLocation: ${location}\n\nService: ${service}\nSize: ${size}\nEstimated Cost: ${price}\n\nPreferred Date: ${date}\nNotes: ${notes}`;
+  const message =
+`WHITEGLOVE BOOKING REQUEST
+
+Name: ${name}
+Phone: ${phone}
+Location: ${location}
+
+Service: ${service}
+Size: ${size}
+Estimated Cost: ${price}
+
+Preferred Date: ${date}
+Notes: ${notes}`;
 
   const whatsappNumber = '254711100200';
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const whatsappURL =
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   window.open(whatsappURL, '_blank');
 
@@ -193,6 +307,3 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
 
 </body>
 </html>
-
-
-
