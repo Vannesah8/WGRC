@@ -120,11 +120,14 @@
 
   <div class="thank-you" id="thankYouMessage">
     Thank you for choosing WhiteGlove Residential Care.<br />
-    Your booking has been received on WhatsApp.
+    Your booking has been received.
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
+  emailjs.init("PlGk7JPI9lizf8rwF");
+
 const prices = {
   basic: { 'Studio': 2300, '1 Bedroom': 2700, '2 Bedroom': 3300, '3 Bedroom': 4100, '4 Bedroom': 5000, '5 Bedroom': 5900, '6 Bedroom': 6800 },
   deep: { 'Studio': 4800, '1 Bedroom': 5500, '2 Bedroom': 6800, '3 Bedroom': 8200, '4 Bedroom': 9800, '5 Bedroom': 11500, '6 Bedroom': 13500 },
@@ -162,32 +165,33 @@ function updatePrice() {
   }
 }
 
-// prevent past dates
 const today = new Date().toISOString().split('T')[0];
 document.getElementById('dateInput').setAttribute('min', today);
 
-// WhatsApp submission
+// EmailJS submission
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const name = document.querySelector('input[placeholder="Enter your full name"]').value;
-  const phone = document.querySelector('input[type="tel"]').value;
-  const location = document.querySelector('input[placeholder="e.g. Nyari, Westlands"]').value;
-  const service = document.getElementById('service').selectedOptions[0].text;
-  const size = document.getElementById('size').value;
-  const price = document.getElementById('price').textContent;
-  const date = document.getElementById('dateInput').value;
-  const notes = document.querySelector('textarea').value || 'None';
+  const templateParams = {
+    name: document.querySelector('input[placeholder="Enter your full name"]').value,
+    phone: document.querySelector('input[type="tel"]').value,
+    location: document.querySelector('input[placeholder="e.g. Nyari, Westlands"]').value,
+    service: document.getElementById('service').selectedOptions[0].text,
+    size: document.getElementById('size').value,
+    price: document.getElementById('price').textContent,
+    date: document.getElementById('dateInput').value,
+    notes: document.querySelector('textarea').value || 'None'
+  };
 
-  const message = `WHITEGLOVE BOOKING REQUEST\n\nName: ${name}\nPhone: ${phone}\nLocation: ${location}\n\nService: ${service}\nSize: ${size}\nEstimated Cost: ${price}\n\nPreferred Date: ${date}\nNotes: ${notes}`;
-
-  const whatsappNumber = '254711100200';
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
-  window.open(whatsappURL, '_blank');
-
-  this.style.display = 'none';
-  document.getElementById('thankYouMessage').style.display = 'block';
+  emailjs.send('service_0mrf039', 'template_vp0wdrw', templateParams)
+    .then(() => {
+      document.getElementById('bookingForm').style.display = 'none';
+      document.getElementById('thankYouMessage').style.display = 'block';
+    })
+    .catch((error) => {
+      alert('Something went wrong. Please try again or contact us directly.');
+      console.error('EmailJS error:', error);
+    });
 });
 </script>
 
