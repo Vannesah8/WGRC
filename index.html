@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Book a Service | WhiteGlove Residential Care</title>
 
-  <!-- Kugile Regular Font -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Kugile&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
@@ -43,20 +44,18 @@
     input:focus, select:focus, textarea:focus { outline: none; border-color: #DE3163; }
     textarea { resize: none; height: 80px; }
 
-    #price-box { display: none; padding: 14px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; margin-top: -5px; }
+    #price-box { display: none; padding: 14px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; margin-top: -5px; border-left: 4px solid #DE3163; }
     #price { font-size: 18px; margin-top: 6px; color: #DE3163; }
 
     button { margin-top: 10px; padding: 14px; background: #DE3163; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; }
     button:hover { opacity: 0.9; }
-
-    .footer-note { text-align: center; font-size: 12px; color: #777; margin-top: 20px; line-height: 1.4; }
 
     .thank-you { display: none; text-align: center; font-size: 16px; color: #DE3163; margin-top: 20px; }
 
     @media (max-width: 480px) {
       .booking-container { padding: 30px 20px; }
       h2 { font-size: 18px; }
-      .logo h1 { font-size: 28px; }
+      .logo h1 { font-size: 28px; letter-spacing: 1px; }
     }
   </style>
 </head>
@@ -77,7 +76,7 @@
     </div>
     <div>
       <label>Phone Number</label>
-      <input type="tel" placeholder="e.g. 0711 100 200" required />
+      <input type="tel" placeholder="e.g. 0711 100 200" pattern="^(07|01)\d{8}$" required />
     </div>
     <div>
       <label>Location / Estate</label>
@@ -103,22 +102,25 @@
     <div id="price-box">
       <strong>Estimated Cost:</strong>
       <div id="price">KES 0</div>
-      <small style="color:#777;">Final price may vary based on assessment.</small>
+      <small style="color:#777;">
+        Includes standard transport within Nairobi (KES 800).<br>
+        Final price may vary after assessment.
+      </small>
     </div>
     <div>
       <label>Preferred Date</label>
-      <input type="date" required />
+      <input type="date" id="dateInput" required />
     </div>
     <div>
       <label>Additional Notes</label>
       <textarea placeholder="Any special instructions?"></textarea>
     </div>
-    <button type="submit">Submit Booking</button>
+    <button type="submit">Confirm Booking</button>
   </form>
 
   <div class="thank-you" id="thankYouMessage">
     Thank you for choosing WhiteGlove Residential Care.<br />
-    Your booking has been received.
+    Your booking has been received on WhatsApp.
   </div>
 </div>
 
@@ -127,7 +129,8 @@ const prices = {
   basic: { 'Studio': 2300, '1 Bedroom': 2700, '2 Bedroom': 3300, '3 Bedroom': 4100, '4 Bedroom': 5000, '5 Bedroom': 5900, '6 Bedroom': 6800 },
   deep: { 'Studio': 4800, '1 Bedroom': 5500, '2 Bedroom': 6800, '3 Bedroom': 8200, '4 Bedroom': 9800, '5 Bedroom': 11500, '6 Bedroom': 13500 },
   afterparty: { 'Studio / 1 Bedroom': 6000, '2 Bedroom': 7500, '3 Bedroom': 9000, '4 Bedroom': 11000, '5 Bedroom': 13000, '6 Bedroom': 15000 },
-  move: { 'Studio': 3500, '1 Bedroom': 4200, '2 Bedroom': 5300, '3 Bedroom': 6800, '4 Bedroom': 8200, '5 Bedroom': 9700, '6 Bedroom': 11200 }
+  move: { 'Studio': 3500, '1 Bedroom': 4200, '2 Bedroom': 5300, '3 Bedroom': 6800, '4 Bedroom': 8200, '5 Bedroom': 9700, '6 Bedroom': 11200 },
+  office: { 'Small Office (1–5 staff)': 6000, 'Medium Office (6–15 staff)': 9000, 'Large Office (16–30 staff)': 13000, 'Corporate Office (30+ staff)': 18000 }
 };
 
 function updateSizes() {
@@ -159,9 +162,30 @@ function updatePrice() {
   }
 }
 
-// Form submission
+// prevent past dates
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('dateInput').setAttribute('min', today);
+
+// WhatsApp submission
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
+
+  const name = document.querySelector('input[placeholder="Enter your full name"]').value;
+  const phone = document.querySelector('input[type="tel"]').value;
+  const location = document.querySelector('input[placeholder="e.g. Nyari, Westlands"]').value;
+  const service = document.getElementById('service').selectedOptions[0].text;
+  const size = document.getElementById('size').value;
+  const price = document.getElementById('price').textContent;
+  const date = document.getElementById('dateInput').value;
+  const notes = document.querySelector('textarea').value || 'None';
+
+  const message = `WHITEGLOVE BOOKING REQUEST\n\nName: ${name}\nPhone: ${phone}\nLocation: ${location}\n\nService: ${service}\nSize: ${size}\nEstimated Cost: ${price}\n\nPreferred Date: ${date}\nNotes: ${notes}`;
+
+  const whatsappNumber = '254711100200';
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappURL, '_blank');
+
   this.style.display = 'none';
   document.getElementById('thankYouMessage').style.display = 'block';
 });
@@ -169,5 +193,6 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
 
 </body>
 </html>
+
 
 
