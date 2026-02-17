@@ -1,164 +1,105 @@
-<!DOCTYPE html> 
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book a Service | WhiteGlove Residential Care</title>
+<form id="bookingForm">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Kugile&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-
-    /* Smooth Fade In */
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      color: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    /* Sparkle Effect */
-    .sparkle {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      background: #DE3163;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: sparkle-animation 1.5s ease-out forwards;
-      z-index: 9999;
-      box-shadow: 0 0 10px #DE3163;
-    }
-
-    @keyframes sparkle-animation {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(3) translateY(-40px); }
-    }
-
-    .booking-container {
-      background: #ffffff;
-      width: 100%;
-      max-width: 520px;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-      display: flex; 
-      flex-direction: column; 
-      gap: 20px;
-    }
-
-    .logo { text-align: center; margin-bottom: 25px; }
-
-    .logo h1 {
-      font-family: 'Kugile', sans-serif;
-      font-weight: normal;
-      font-size: 36px;
-      letter-spacing: 2px;
-      color: #000;
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    .logo p { 
-      font-size: 13px; 
-      color: #555; 
-      margin-top: 6px; 
-      letter-spacing: 1px; 
-    }
-
-    h2 { 
-      text-align: center; 
-      font-weight: 500; 
-      margin: 20px 0; 
-      font-size: 20px; 
-    }
-
-    form { display: flex; flex-direction: column; gap: 20px; }
-
-    label { font-size: 14px; color: #555; margin-bottom: 6px; display: block; }
-
-    input, select, textarea { 
-      padding: 12px 14px; 
-      border: 1px solid #ddd; 
-      border-radius: 8px; 
-      font-size: 14px; 
-      width: 100%; 
-    }
-
-    input:focus, select:focus, textarea:focus { 
-      outline: none; 
-      border-color: #DE3163; 
-    }
-
-    textarea { resize: none; height: 80px; }
-
-    #price-box { 
-      display: none; 
-      padding: 14px; 
-      border: 1px solid #eee; 
-      border-radius: 8px; 
-      background: #fafafa; 
-      margin-top: -5px; 
-      border-left: 4px solid #DE3163; 
-    }
-
-    #price { font-size: 18px; margin-top: 6px; color: #DE3163; }
-
-    button { 
-      margin-top: 10px; 
-      padding: 14px; 
-      background: #DE3163; 
-      color: #fff; 
-      border: none; 
-      border-radius: 8px; 
-      font-size: 15px; 
-      font-weight: 500; 
-      cursor: pointer; 
-      width: 100%; 
-    }
-
-    button:hover { opacity: 0.9; }
-
-    .thank-you { 
-      display: none; 
-      text-align: center; 
-      font-size: 16px; 
-      color: #DE3163; 
-      margin-top: 20px; 
-    }
-
-    @media (max-width: 480px) {
-      .booking-container { padding: 30px 20px; }
-      h2 { font-size: 18px; }
-      .logo h1 { font-size: 28px; letter-spacing: 1px; }
-    }
-  </style>
-</head>
-
-<body>
-
-<!-- Sound -->
-<audio id="openSound" src="sounds/chime.mp3" preload="auto"></audio>
-
-<div class="booking-container">
-  <div class="logo">
-    <h1>WhiteGlove Residential Care</h1>
-    <p>Executive Home Services</p>
+  <div>
+    <label>Full Name</label>
+    <input type="text" id="name" required>
   </div>
 
-  <h2>Book a Service</h2>
+  <div>
+    <label>Phone Number</label>
+    <input type="tel" id="phone" required>
+  </div>
 
-  <form id="bookingForm">
-    <!-- (Your form remains unchanged) -->
+  <div>
+    <label>Select Service</label>
+    <select id="service" required>
+      <option value="">Choose a service</option>
+      <option value="1100">Basic Cleaning – 1 Bedroom (KES 1100)</option>
+      <option value="1500">Basic Cleaning – 2 Bedroom (KES 1500)</option>
+      <option value="1900">Basic Cleaning – 3 Bedroom (KES 1900)</option>
+      <option value="2500">Basic Cleaning – 4 Bedroom (KES 2500)</option>
+
+      <option value="2100">Deep Cleaning – 1 Bedroom (KES 2100)</option>
+      <option value="3000">Deep Cleaning – 2 Bedroom (KES 3000)</option>
+      <option value="4000">Deep Cleaning – 3 Bedroom (KES 4000)</option>
+      <option value="5000">Deep Cleaning – 4 Bedroom (KES 5000)</option>
+    </select>
+  </div>
+
+  <div id="price-box">
+    <strong>Total Price:</strong>
+    <div id="price"></div>
+  </div>
+
+  <div>
+    <label>Location</label>
+    <input type="text" id="location" required>
+  </div>
+
+  <div>
+    <label>Preferred Date</label>
+    <input type="date" id="date" required>
+  </div>
+
+  <div>
+    <label>Additional Notes</label>
+    <textarea id="notes"></textarea>
+  </div>
+
+  <button type="submit">Book Now</button>
+
+</form>
+
+<div class="thank-you" id="thankYouMessage">
+  Thank you for choosing WhiteGlove Residential Care. You will receive a confirmation shortly.
+</div>
+
+<script>
+  const serviceSelect = document.getElementById("service");
+  const priceBox = document.getElementById("price-box");
+  const priceDisplay = document.getElementById("price");
+  const form = document.getElementById("bookingForm");
+  const thankYou = document.getElementById("thankYouMessage");
+  const sound = document.getElementById("openSound");
+
+  // Show price when service selected
+  serviceSelect.addEventListener("change", function () {
+    if (this.value !== "") {
+      priceBox.style.display = "block";
+      priceDisplay.textContent = "KES " + this.value;
+    } else {
+      priceBox.style.display = "none";
+    }
+  });
+
+  // Submit form
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    form.style.display = "none";
+    thankYou.style.display = "block";
+
+    if (sound) {
+      sound.play();
+    }
+
+    createSparkles();
+  });
+
+  // Sparkle effect
+  function createSparkles() {
+    for (let i = 0; i < 20; i++) {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1500);
+    }
+  }
+</script>
