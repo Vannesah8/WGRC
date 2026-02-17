@@ -1,105 +1,192 @@
-<form id="bookingForm">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Service | Sparkling Cinderellas</title>
 
-  <div>
-    <label>Full Name</label>
-    <input type="text" id="name" required>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Montserrat', sans-serif; }
+  body {
+    background: #fff;
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .booking-container {
+    max-width: 520px;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: #111;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .logo p {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 10px;
+  }
+
+  form { display: flex; flex-direction: column; gap: 18px; }
+  label { font-weight: 500; color: #333; margin-bottom: 5px; }
+  input, select, textarea { 
+    padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; width: 100%; 
+  }
+  input:focus, select:focus, textarea:focus { border-color: #DE3163; outline:none; }
+  textarea { resize: none; height: 80px; }
+
+  #price-box { 
+    display: none; padding: 12px; background: #fafafa; border-left: 4px solid #DE3163; border-radius: 8px; 
+  }
+  #price { font-size: 18px; color: #DE3163; font-weight: 600; }
+
+  button {
+    padding: 14px;
+    background: #DE3163;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  button:hover { opacity: 0.9; }
+
+  .thank-you {
+    display: none;
+    text-align: center;
+    font-size: 16px;
+    color: #DE3163;
+    margin-top: 20px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="booking-container">
+  <div class="logo">
+    <h1>Sparkling Cinderellas</h1>
+    <p>Executive Home Services</p>
   </div>
 
-  <div>
-    <label>Phone Number</label>
-    <input type="tel" id="phone" required>
+  <h2>Book a Service</h2>
+
+  <form id="bookingForm" action="https://formspree.io/f/your-form-id" method="POST" target="_blank">
+    
+    <div>
+      <label for="name">Full Name</label>
+      <input type="text" name="name" id="name" required>
+    </div>
+
+    <div>
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" id="phone" required>
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required>
+    </div>
+
+    <div>
+      <label for="service">Select Service</label>
+      <select name="service" id="service" required>
+        <option value="">-- Choose a service --</option>
+        <option value="Basic Cleaning 1BR|1100">Basic Cleaning – 1 Bedroom</option>
+        <option value="Basic Cleaning 2BR|1500">Basic Cleaning – 2 Bedroom</option>
+        <option value="Basic Cleaning 3BR|1900">Basic Cleaning – 3 Bedroom</option>
+        <option value="Basic Cleaning 4BR|2500">Basic Cleaning – 4 Bedroom</option>
+        <option value="Deep Cleaning 1BR|2100">Deep Cleaning – 1 Bedroom</option>
+        <option value="Deep Cleaning 2BR|3000">Deep Cleaning – 2 Bedroom</option>
+        <option value="Deep Cleaning 3BR|4000">Deep Cleaning – 3 Bedroom</option>
+        <option value="Deep Cleaning 4BR|5000">Deep Cleaning – 4 Bedroom</option>
+      </select>
+    </div>
+
+    <div id="price-box">
+      <strong>Estimated Price:</strong>
+      <div id="price"></div>
+    </div>
+
+    <div>
+      <label for="location">Location</label>
+      <input type="text" name="location" id="location" required>
+    </div>
+
+    <div>
+      <label for="date">Preferred Date</label>
+      <input type="date" name="date" id="date" required>
+    </div>
+
+    <div>
+      <label for="notes">Additional Notes</label>
+      <textarea name="notes" id="notes"></textarea>
+    </div>
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <div class="thank-you" id="thankYouMessage">
+    Thank you for choosing Sparkling Cinderellas. You will receive a confirmation shortly.
   </div>
-
-  <div>
-    <label>Select Service</label>
-    <select id="service" required>
-      <option value="">Choose a service</option>
-      <option value="1100">Basic Cleaning – 1 Bedroom (KES 1100)</option>
-      <option value="1500">Basic Cleaning – 2 Bedroom (KES 1500)</option>
-      <option value="1900">Basic Cleaning – 3 Bedroom (KES 1900)</option>
-      <option value="2500">Basic Cleaning – 4 Bedroom (KES 2500)</option>
-
-      <option value="2100">Deep Cleaning – 1 Bedroom (KES 2100)</option>
-      <option value="3000">Deep Cleaning – 2 Bedroom (KES 3000)</option>
-      <option value="4000">Deep Cleaning – 3 Bedroom (KES 4000)</option>
-      <option value="5000">Deep Cleaning – 4 Bedroom (KES 5000)</option>
-    </select>
-  </div>
-
-  <div id="price-box">
-    <strong>Total Price:</strong>
-    <div id="price"></div>
-  </div>
-
-  <div>
-    <label>Location</label>
-    <input type="text" id="location" required>
-  </div>
-
-  <div>
-    <label>Preferred Date</label>
-    <input type="date" id="date" required>
-  </div>
-
-  <div>
-    <label>Additional Notes</label>
-    <textarea id="notes"></textarea>
-  </div>
-
-  <button type="submit">Book Now</button>
-
-</form>
-
-<div class="thank-you" id="thankYouMessage">
-  Thank you for choosing WhiteGlove Residential Care. You will receive a confirmation shortly.
 </div>
 
 <script>
-  const serviceSelect = document.getElementById("service");
-  const priceBox = document.getElementById("price-box");
-  const priceDisplay = document.getElementById("price");
-  const form = document.getElementById("bookingForm");
-  const thankYou = document.getElementById("thankYouMessage");
-  const sound = document.getElementById("openSound");
+const serviceSelect = document.getElementById("service");
+const priceBox = document.getElementById("price-box");
+const priceDisplay = document.getElementById("price");
+const form = document.getElementById("bookingForm");
+const thankYou = document.getElementById("thankYouMessage");
 
-  // Show price when service selected
-  serviceSelect.addEventListener("change", function () {
-    if (this.value !== "") {
-      priceBox.style.display = "block";
-      priceDisplay.textContent = "KES " + this.value;
-    } else {
-      priceBox.style.display = "none";
-    }
-  });
+// Show estimate price
+serviceSelect.addEventListener("change", function() {
+  if(this.value){
+    const parts = this.value.split("|");
+    priceBox.style.display = "block";
+    priceDisplay.textContent = "KES " + parts[1];
+  } else {
+    priceBox.style.display = "none";
+  }
+});
 
-  // Submit form
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
+// Handle thank you message (optional: hides form after submission)
+form.addEventListener("submit", function(e){
+  setTimeout(() => {
     form.style.display = "none";
     thankYou.style.display = "block";
-
-    if (sound) {
-      sound.play();
-    }
-
-    createSparkles();
-  });
-
-  // Sparkle effect
-  function createSparkles() {
-    for (let i = 0; i < 20; i++) {
-      const sparkle = document.createElement("div");
-      sparkle.classList.add("sparkle");
-
-      sparkle.style.left = Math.random() * window.innerWidth + "px";
-      sparkle.style.top = Math.random() * window.innerHeight + "px";
-
-      document.body.appendChild(sparkle);
-
-      setTimeout(() => {
-        sparkle.remove();
-      }, 1500);
-    }
-  }
+  }, 100);
+});
 </script>
+
+</body>
+</html>
+
